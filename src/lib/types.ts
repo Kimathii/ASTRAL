@@ -33,6 +33,12 @@ export interface PropertyRecord {
   verificationStatus: VerificationStatus;
   addedAt: string;
   assignedAgentIds: string[];
+  images?: string[];
+  description?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  sizeSqFt?: number;
+  features?: string[];
 }
 
 export interface Opportunity {
@@ -54,6 +60,8 @@ export interface AgentProfile {
   activeOpportunities: number;
   closedDeals: number;
   reputation: "new" | "trusted" | "top";
+  avatarUrl?: string;
+  bio?: string;
 }
 
 export type InspectionStatus = "requested" | "scheduled" | "completed" | "cancelled";
