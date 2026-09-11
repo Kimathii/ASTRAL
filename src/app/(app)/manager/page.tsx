@@ -11,7 +11,7 @@ export default function ManagerDashboard() {
     <div className="mx-auto max-w-5xl">
       <div className="mb-6 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-ink">Good to see you, Halima</h1>
+          <h1 className="text-2xl font-semibold text-ink">Good to see you, Amarachi</h1>
           <p className="mt-1 text-sm text-slate">Here&apos;s what&apos;s moving across your properties.</p>
         </div>
         <Link
