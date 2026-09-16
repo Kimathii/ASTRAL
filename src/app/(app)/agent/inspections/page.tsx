@@ -17,19 +17,32 @@ export default function AgentInspectionsPage() {
 
       <div className="flex flex-col gap-3">
         {mine.map((inspection) => {
-          const opportunity = opportunities.find((o) => o.id === inspection.opportunityId);
-          const property = properties.find((p) => p.id === opportunity?.propertyId);
+          const property = properties.find((p) => p.id === inspection.propertyId);
           return (
             <div key={inspection.id} className="rounded-xl border border-line bg-white p-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-medium text-ink">{property?.title}</h3>
+                <div>
+                  <span className="text-[11px] font-mono text-slate uppercase">{inspection.transactionId}</span>
+                  <h3 className="font-semibold text-ink">{property?.title}</h3>
+                </div>
                 <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${STATUS_STYLE[inspection.status]}`}>
                   {inspection.status}
                 </span>
               </div>
-              <p className="mt-1 text-sm text-slate">Requested {inspection.requestedAt}</p>
+              <p className="mt-1 text-xs text-slate">
+                Requested: {inspection.requestedAt}
+                {inspection.scheduledFor && ` • Scheduled: ${new Date(inspection.scheduledFor).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}`}
+              </p>
               {inspection.feedback && (
-                <p className="mt-2 rounded-lg bg-mist p-3 text-sm text-ink">{inspection.feedback}</p>
+                <div className="mt-3 rounded-lg border border-line/60 bg-mist p-3 text-xs">
+                  <div className="flex items-center justify-between font-medium text-ink mb-1">
+                    <span>Interest: <strong className="capitalize text-blue">{inspection.feedback.interestLevel}</strong></span>
+                    <span>Accuracy Rating: <strong>{inspection.feedback.propertyAccuracyScore}/5</strong></span>
+                  </div>
+                  {inspection.feedback.clientFeedbackNotes && (
+                    <p className="text-slate mt-1 italic">&ldquo;{inspection.feedback.clientFeedbackNotes}&rdquo;</p>
+                  )}
+                </div>
               )}
             </div>
           );

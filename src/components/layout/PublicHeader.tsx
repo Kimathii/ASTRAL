@@ -27,26 +27,29 @@ export function PublicHeader() {
             <div className="h-4 w-4 rounded-xs bg-sky" />
           </div>
           <div>
-            <span className="text-xl font-bold tracking-tight text-navy">Astral</span>
-            <span className="hidden sm:inline-block ml-2 text-xs font-semibold uppercase tracking-wider text-blue bg-ice px-2 py-0.5 rounded">
-              Verified Marketplace
+            <div className="flex items-center gap-1.5">
+              <span className="text-xl font-bold tracking-tight text-navy">Astral</span>
+              <span className="text-xl font-bold tracking-tight text-blue">Link</span>
+            </div>
+            <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider text-slate">
+              Transaction Network
             </span>
           </div>
         </Link>
 
         {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate">
-          <a href="/#properties" className="transition hover:text-blue">
-            Explore Properties
+          <a href="/#workflow" className="transition hover:text-blue">
+            Transaction Workflow
           </a>
-          <a href="/#agents" className="transition hover:text-blue">
-            Featured Agents
+          <a href="/#passports" className="transition hover:text-blue">
+            Property Passports
           </a>
-          <a href="/#how-it-works" className="transition hover:text-blue">
-            How It Works
+          <a href="/#collaboration" className="transition hover:text-blue">
+            Commission Protection
           </a>
-          <a href="/#why-astral" className="transition hover:text-blue">
-            Why Astral
+          <a href="/#network" className="transition hover:text-blue">
+            Network Pilot
           </a>
         </nav>
 

@@ -1,23 +1,38 @@
 import {
   AgentProfile,
-  InspectionEvent,
+  CollaborationRequest,
+  InspectionRecord,
   Opportunity,
-  PropertyRecord,
+  PropertyPassport,
+  Transaction,
+  TransactionEvent,
 } from "./types";
 
-// Seed data with curated high-resolution architecture & interior photography
-export const properties: PropertyRecord[] = [
+// Seed Property Passports with verified commercial terms, sourcing & one-additional-agent rules
+export const properties: PropertyPassport[] = [
   {
     id: "prop_1",
     title: "3-Bed Contemporary Terrace",
     propertyType: "Residential",
     location: "Jabi, Abuja",
+    addressSummary: "Jabi Lake District, Off Shehu Yar'Adua Way",
     price: 4500000,
     priceUnit: "rent_year",
     availability: "available",
+    sourceType: "pm",
     managerId: "mgr_1",
     managerName: "Amarachi Longws",
     verificationStatus: "verified",
+    verifiedAt: "2026-08-15",
+    lastVerifiedDate: "2026-09-01",
+    verificationNotes: "Title deeds & PM mandate physically verified by Astral Admin.",
+    commercialTerms: {
+      totalCommissionPct: 10,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: true,
+      maxCollaboratingAgents: 1, // Enforcing 1-additional-agent rule
+      notes: "10% Agency fee payable upon cleared rent. 50/50 split if collaborating with tenant rep.",
+    },
     addedAt: "2026-08-14",
     assignedAgentIds: ["agent_1", "agent_2"],
     bedrooms: 3,
@@ -45,12 +60,23 @@ export const properties: PropertyRecord[] = [
     title: "Executive Grade-A Office Suite",
     propertyType: "Commercial",
     location: "Wuse II, Abuja",
+    addressSummary: "Aminu Kano Crescent, Commercial Hub",
     price: 12000000,
     priceUnit: "rent_year",
     availability: "available",
+    sourceType: "pm",
     managerId: "mgr_1",
     managerName: "Amarachi Longws",
     verificationStatus: "verified",
+    verifiedAt: "2026-09-02",
+    lastVerifiedDate: "2026-09-02",
+    commercialTerms: {
+      totalCommissionPct: 10,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: true,
+      maxCollaboratingAgents: 1,
+      notes: "Corporate tenants only. Agency fee standard 10%.",
+    },
     addedAt: "2026-09-01",
     assignedAgentIds: ["agent_2"],
     bathrooms: 2,
@@ -76,12 +102,23 @@ export const properties: PropertyRecord[] = [
     title: "Luxury 5-Bed Detached Villa with Pool",
     propertyType: "Residential",
     location: "Maitama, Abuja",
+    addressSummary: "Gana Street Enclave, Maitama",
     price: 320000000,
     priceUnit: "sale",
     availability: "available",
+    sourceType: "pm",
     managerId: "mgr_2",
     managerName: "Tunde Okafor",
     verificationStatus: "verified",
+    verifiedAt: "2026-07-24",
+    lastVerifiedDate: "2026-08-15",
+    commercialTerms: {
+      totalCommissionPct: 5,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: true,
+      maxCollaboratingAgents: 1,
+      notes: "5% Sale Commission (₦16,000,000). Co-broker split at 50/50.",
+    },
     addedAt: "2026-07-22",
     assignedAgentIds: ["agent_1", "agent_2"],
     bedrooms: 5,
@@ -98,90 +135,82 @@ export const properties: PropertyRecord[] = [
     features: [
       "Private Swimming Pool",
       "Smart Home Automation",
-      "2-Room Boys Quarters",
-      "Private Cinema & Gym",
-      "CCTV & Electric Perimeter",
-      "Fully Furnished Option Available",
+      "Private Cinema",
+      "2-Room Staff Quarters",
+      "3-Car Motorized Garage",
+      "Biometric Perimeter Access",
     ],
   },
   {
     id: "prop_4",
-    title: "4-Bed Waterfront Townhouse",
+    title: "Contemporary 4-Bed Semi-Detached Duplex",
     propertyType: "Residential",
     location: "Lekki Phase 1, Lagos",
-    price: 18000000,
-    priceUnit: "rent_year",
+    addressSummary: "Admiralty Way Axis, Lekki Phase 1",
+    price: 185000000,
+    priceUnit: "sale",
     availability: "available",
-    managerId: "mgr_2",
-    managerName: "Tunde Okafor",
+    sourceType: "agent_supplied",
+    managerId: "mgr_3",
+    managerName: "Folake Balogun",
     verificationStatus: "verified",
+    verifiedAt: "2026-08-30",
+    lastVerifiedDate: "2026-08-30",
+    commercialTerms: {
+      totalCommissionPct: 5,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: true,
+      maxCollaboratingAgents: 1,
+      notes: "Governor's Consent in view. 5% commission split on completion.",
+    },
     addedAt: "2026-08-28",
     assignedAgentIds: ["agent_1"],
     bedrooms: 4,
     bathrooms: 5,
     sizeSqFt: 3800,
     description:
-      "Stunning contemporary townhouse with direct lagoon views in prestigious Lekki Phase 1. Features marble flooring throughout, floor-to-ceiling soundproof glazing, private rooftop lounge terrace, and a serene community jetty.",
+      "Newly finished high-spec 4-bedroom duplex in a secure gated estate in Lekki Phase 1. Complete with stamped concrete flooring, fitted Italian kitchen, rooftop lounge, and self-contained BQ.",
     images: [
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80",
     ],
     features: [
-      "Lagoon Views & Rooftop Terrace",
-      "24/7 Serviced Estate",
-      "Fitted Italian Kitchen",
-      "Modern Walk-in Closets",
-      "Dedicated Facility Management",
-      "Private 3-Vehicle Garage",
+      "Rooftop Terrace Lounge",
+      "Ensuite Maid's Room (BQ)",
+      "Stamped Concrete Driveway",
+      "Integrated Audio System",
+      "Industrial Water Purification",
     ],
   },
   {
     id: "prop_5",
-    title: "4-Bed Modern Duplex",
-    propertyType: "Residential",
-    location: "Gwarinpa, Abuja",
-    price: 85000000,
-    priceUnit: "sale",
+    title: "Waterfront Commercial Showroom & Plaza",
+    propertyType: "Commercial",
+    location: "Victoria Island, Lagos",
+    addressSummary: "Ozumba Mbadiwe Avenue",
+    price: 35000000,
+    priceUnit: "rent_year",
     availability: "under_offer",
+    sourceType: "pm",
     managerId: "mgr_2",
     managerName: "Tunde Okafor",
     verificationStatus: "verified",
-    addedAt: "2026-07-22",
+    verifiedAt: "2026-08-10",
+    lastVerifiedDate: "2026-09-05",
+    commercialTerms: {
+      totalCommissionPct: 10,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: false,
+      maxCollaboratingAgents: 0,
+      notes: "Exclusive single-agent mandate. No external collaborator permitted without PM sign-off.",
+    },
+    addedAt: "2026-08-10",
     assignedAgentIds: ["agent_1"],
-    bedrooms: 4,
-    bathrooms: 5,
-    sizeSqFt: 3400,
+    bathrooms: 6,
+    sizeSqFt: 8500,
     description:
-      "Well-proportioned family duplex situated inside an exclusive gated community in Gwarinpa. Newly renovated with polished porcelain tiles, modern recessed LED lighting, and large garden space.",
-    images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1200&q=80",
-    ],
-    features: [
-      "Gated Estate",
-      "Spacious Front & Back Lawn",
-      "Fully Ensuite Rooms",
-      "Borehole with Filtration",
-    ],
-  },
-  {
-    id: "prop_6",
-    title: "Prime Commercial Plaza Unit",
-    propertyType: "Commercial",
-    location: "Victoria Island, Lagos",
-    price: 45000000,
-    priceUnit: "rent_year",
-    availability: "available",
-    managerId: "mgr_1",
-    managerName: "Amarachi Longws",
-    verificationStatus: "verified",
-    addedAt: "2026-09-08",
-    assignedAgentIds: ["agent_2"],
-    bathrooms: 4,
-    sizeSqFt: 4800,
-    description:
-      "Strategic high-visibility commercial floor in Victoria Island, ideal for banking, corporate headquarters, or tech accelerators. Unmatched footfall and accessibility.",
+      "Unrivaled visibility on Ozumba Mbadiwe Avenue. Glass-fronted commercial building ideal for luxury automotive showrooms, flagship banking branches, or high-end retail headquarters.",
     images: [
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
@@ -193,14 +222,240 @@ export const properties: PropertyRecord[] = [
       "CCTV Surveillance",
     ],
   },
+  {
+    id: "prop_6",
+    title: "Furnished 2-Bed Luxury Apartment",
+    propertyType: "Residential",
+    location: "Wuse II, Abuja",
+    addressSummary: "Adetokunbo Ademola Crescent, Wuse II",
+    price: 6000000,
+    priceUnit: "rent_year",
+    availability: "available",
+    sourceType: "agent_supplied",
+    managerId: "agent_2",
+    managerName: "David Osei (Agent Supplied)",
+    verificationStatus: "pending",
+    commercialTerms: {
+      totalCommissionPct: 10,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: true,
+      maxCollaboratingAgents: 1,
+      notes: "Agent-sourced direct mandate from diaspora landlord. Title deed and authorization uploaded.",
+    },
+    addedAt: "2026-09-14",
+    assignedAgentIds: ["agent_2"],
+    bedrooms: 2,
+    bathrooms: 2,
+    sizeSqFt: 1400,
+    description: "Fully furnished 2-bedroom executive apartment with serviced power and gym in the heart of Wuse II.",
+    images: [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: ["Fully Furnished", "Gym & Pool", "24/7 Power", "High-speed WiFi"],
+  },
+  {
+    id: "prop_7",
+    title: "3-Bedroom Terrace in Jabi (Duplicate Submission)",
+    propertyType: "Residential",
+    location: "Jabi, Abuja",
+    addressSummary: "Jabi Lake Axis, Off Shehu Yar'Adua Way",
+    price: 4500000,
+    priceUnit: "rent_year",
+    availability: "available",
+    sourceType: "agent_supplied",
+    managerId: "agent_unknown",
+    managerName: "Premier Realty Partners",
+    verificationStatus: "flagged",
+    verificationNotes: "Automated detection: 92% address and price similarity with canonical passport PROP-1.",
+    commercialTerms: {
+      totalCommissionPct: 10,
+      distributingAgentSharePct: 100,
+      collaborationAllowed: true,
+      maxCollaboratingAgents: 1,
+      notes: "Submitted by external broker without proof of direct PM mandate.",
+    },
+    addedAt: "2026-09-15",
+    assignedAgentIds: [],
+    bedrooms: 3,
+    bathrooms: 4,
+    sizeSqFt: 2400,
+    description: "Spacious 3-bedroom terrace duplex in Jabi with modern finishes.",
+    images: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: ["Gated Estate", "Generator Backup"],
+  },
 ];
 
-export const opportunities: Opportunity[] = [
-  { id: "opp_1", propertyId: "prop_1", stage: "inspect", interestedAgentIds: ["agent_1", "agent_2"], updatedAt: "2026-09-03" },
-  { id: "opp_2", propertyId: "prop_3", stage: "negotiate", interestedAgentIds: ["agent_1"], updatedAt: "2026-09-05" },
-  { id: "opp_3", propertyId: "prop_2", stage: "discover", interestedAgentIds: ["agent_2"], updatedAt: "2026-09-01" },
-  { id: "opp_4", propertyId: "prop_4", stage: "discover", interestedAgentIds: ["agent_1"], updatedAt: "2026-08-28" },
-  { id: "opp_5", propertyId: "prop_5", stage: "legal_close", interestedAgentIds: ["agent_1"], updatedAt: "2026-09-10" },
+// Seed Astral Link Transactions: Proving the repeatable transaction loop
+export const transactions: Transaction[] = [
+  {
+    id: "TRX-2026-001",
+    propertyId: "prop_1",
+    pmId: "mgr_1",
+    originatingAgentId: "agent_1", // Chiamaka claimed opportunity
+    leadAgentId: "agent_1",
+    collaboratingAgentId: "agent_2", // David Osei brought the client
+    collaboratingRole: "tenant_rep",
+    clientRef: {
+      name: "Engr. Kabir Bello",
+      phoneOrEmailMasked: "+234 803 *** 8812",
+      introducedByAgentId: "agent_2",
+      associatedAt: "2026-09-02",
+    },
+    stage: "inspection",
+    commissionSplit: {
+      leadAgentPct: 50,
+      collaboratingAgentPct: 50,
+      astralPlatformPct: 0,
+      totalEstimatedCommissionNgn: 450000, // 10% of 4.5m rent
+      isTermsAcceptedByCollaborator: true,
+    },
+    nextActionRequired: {
+      actorRole: "collaborator",
+      instruction: "Log inspection feedback following client viewing scheduled for 10:00 AM.",
+      dueBy: "2026-09-09",
+    },
+    createdAt: "2026-09-01",
+    updatedAt: "2026-09-03",
+  },
+  {
+    id: "TRX-2026-002",
+    propertyId: "prop_3",
+    pmId: "mgr_2",
+    originatingAgentId: "agent_1",
+    leadAgentId: "agent_1",
+    clientRef: {
+      name: "Dr. & Mrs. Adeleke",
+      phoneOrEmailMasked: "+234 812 *** 9001",
+      introducedByAgentId: "agent_1",
+      associatedAt: "2026-08-25",
+    },
+    stage: "negotiation",
+    commissionSplit: {
+      leadAgentPct: 100,
+      totalEstimatedCommissionNgn: 16000000, // 5% of 320m sale
+      isTermsAcceptedByCollaborator: true,
+    },
+    nextActionRequired: {
+      actorRole: "pm",
+      instruction: "Review revised counter-offer of ₦305,000,000 submitted by Lead Agent.",
+      dueBy: "2026-09-07",
+    },
+    createdAt: "2026-08-20",
+    updatedAt: "2026-09-05",
+  },
+  {
+    id: "TRX-2026-003",
+    propertyId: "prop_5",
+    pmId: "mgr_2",
+    originatingAgentId: "agent_1",
+    leadAgentId: "agent_1",
+    clientRef: {
+      name: "Vanguard Capital Partners",
+      phoneOrEmailMasked: "operations@vanguard***.ng",
+      introducedByAgentId: "agent_1",
+      associatedAt: "2026-08-15",
+    },
+    stage: "legal",
+    commissionSplit: {
+      leadAgentPct: 100,
+      totalEstimatedCommissionNgn: 3500000, // 10% of 35m rent
+      isTermsAcceptedByCollaborator: true,
+    },
+    nextActionRequired: {
+      actorRole: "admin",
+      instruction: "Verify executed commercial tenancy agreement and bank clearance of advance deposit.",
+      dueBy: "2026-09-12",
+    },
+    createdAt: "2026-08-10",
+    updatedAt: "2026-09-10",
+  },
+];
+
+// Active Collaboration Requests between agents
+export const collaborationRequests: CollaborationRequest[] = [
+  {
+    id: "collab_req_1",
+    transactionId: "TRX-2026-001",
+    propertyId: "prop_1",
+    invitingAgentId: "agent_1",
+    invitedAgentId: "agent_2",
+    offeredRole: "tenant_rep",
+    proposedSplitPct: 50,
+    status: "accepted",
+    termsAcceptedAt: "2026-09-02T11:30:00",
+    note: "Client is looking for immediate move-in Jabi residence. 50% split agreed.",
+    createdAt: "2026-09-02",
+  },
+];
+
+export const inspections: InspectionRecord[] = [
+  {
+    id: "insp_1",
+    transactionId: "TRX-2026-001",
+    propertyId: "prop_1",
+    agentId: "agent_2",
+    status: "scheduled",
+    requestedAt: "2026-09-02",
+    scheduledFor: "2026-09-09T10:00:00",
+  },
+  {
+    id: "insp_2",
+    transactionId: "TRX-2026-002",
+    propertyId: "prop_3",
+    agentId: "agent_1",
+    status: "completed",
+    requestedAt: "2026-08-20",
+    scheduledFor: "2026-08-24T14:00:00",
+    completedAt: "2026-08-24T15:10:00",
+    feedback: {
+      interestLevel: "high",
+      propertyAccuracyScore: 5,
+      clientFeedbackNotes: "Client was impressed with the structural integrity and pool maintenance. Proceeded with formal offer.",
+      readyForOffer: true,
+      submittedAt: "2026-08-24T16:00:00",
+    },
+  },
+];
+
+export const transactionAuditLogs: TransactionEvent[] = [
+  {
+    id: "evt_1",
+    transactionId: "TRX-2026-001",
+    timestamp: "2026-09-01T09:15:00Z",
+    actorId: "agent_1",
+    actorRole: "agent",
+    eventType: "opportunity_claimed",
+    summary: "Chiamaka Nwosu claimed opportunity to distribute 3-Bed Contemporary Terrace.",
+  },
+  {
+    id: "evt_2",
+    transactionId: "TRX-2026-001",
+    timestamp: "2026-09-02T10:00:00Z",
+    actorId: "agent_1",
+    actorRole: "agent",
+    eventType: "collaboration_invited",
+    summary: "Collaboration invite sent to David Osei (Role: Tenant Rep, 50% split).",
+  },
+  {
+    id: "evt_3",
+    transactionId: "TRX-2026-001",
+    timestamp: "2026-09-02T11:30:00Z",
+    actorId: "agent_2",
+    actorRole: "agent",
+    eventType: "collaboration_accepted",
+    summary: "David Osei accepted collaboration terms. Protected transaction record established.",
+  },
+  {
+    id: "evt_4",
+    transactionId: "TRX-2026-001",
+    timestamp: "2026-09-02T14:00:00Z",
+    actorId: "agent_2",
+    actorRole: "agent",
+    eventType: "inspection_scheduled",
+    summary: "Site inspection scheduled with Engr. Kabir Bello for Sept 9, 10:00 AM.",
+  },
 ];
 
 export const agents: AgentProfile[] = [
@@ -210,13 +465,21 @@ export const agents: AgentProfile[] = [
     email: "chiamaka@example.com",
     phone: "+234 801 234 5678",
     brokerage: "Independent Luxury Advisor",
-    specialties: ["Residential", "Luxury Villas", "Family Rentals"],
+    operatingAreas: ["Maitama", "Jabi", "Wuse II", "Lekki Phase 1"],
+    propertySpecialties: ["Residential", "Luxury Villas", "Family Rentals"],
     catalogueSlug: "chiamaka-nwosu",
+    activeTransactionsCount: 4,
+    closedDealsCount: 18,
+    reputationBadge: "top_producer",
+    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+    bio: "Over 7 years connecting distinguished clients with verified prime properties across Abuja and Lagos.",
+    introducedPropertiesCount: 3,
+
+    // Legacy fields
+    specialties: ["Residential", "Luxury Villas", "Family Rentals"],
     activeOpportunities: 4,
     closedDeals: 18,
     reputation: "top",
-    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-    bio: "Over 7 years connecting distinguished clients with verified prime properties across Abuja and Lagos.",
   },
   {
     id: "agent_2",
@@ -224,39 +487,49 @@ export const agents: AgentProfile[] = [
     email: "david@example.com",
     phone: "+234 802 345 6789",
     brokerage: "Osei Commercial Realty",
-    specialties: ["Commercial Hubs", "Corporate Leases", "Office Suites"],
+    operatingAreas: ["Central Business District", "Wuse II", "Victoria Island"],
+    propertySpecialties: ["Commercial Hubs", "Corporate Leases", "Office Suites"],
     catalogueSlug: "david-osei",
+    activeTransactionsCount: 3,
+    closedDealsCount: 12,
+    reputationBadge: "trusted_partner",
+    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    bio: "Specializing in Grade-A commercial real estate and prime corporate spaces in Abuja & Victoria Island.",
+    introducedPropertiesCount: 1,
+
+    // Legacy fields
+    specialties: ["Commercial Hubs", "Corporate Leases", "Office Suites"],
     activeOpportunities: 3,
     closedDeals: 12,
     reputation: "trusted",
-    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-    bio: "Specializing in Grade-A commercial real estate and prime corporate spaces in Abuja & Victoria Island.",
   },
 ];
 
-export const inspections: InspectionEvent[] = [
-  {
-    id: "insp_1",
-    opportunityId: "opp_1",
-    agentId: "agent_1",
-    status: "scheduled",
-    requestedAt: "2026-09-02",
-    scheduledAt: "2026-09-09T10:00:00",
-  },
-  {
-    id: "insp_2",
-    opportunityId: "opp_2",
-    agentId: "agent_1",
-    status: "completed",
-    requestedAt: "2026-08-20",
-    scheduledAt: "2026-08-24T14:00:00",
-    completedAt: "2026-08-24T15:10:00",
-    feedback: "Client loved the layout. Requesting a second viewing before offer.",
-  },
+// Backward-compatible Opportunity array mapping to transactions for existing views
+export const opportunities: Opportunity[] = [
+  { id: "opp_1", propertyId: "prop_1", stage: "inspect", interestedAgentIds: ["agent_1", "agent_2"], updatedAt: "2026-09-03" },
+  { id: "opp_2", propertyId: "prop_3", stage: "negotiate", interestedAgentIds: ["agent_1"], updatedAt: "2026-09-05" },
+  { id: "opp_3", propertyId: "prop_2", stage: "discover", interestedAgentIds: ["agent_2"], updatedAt: "2026-09-01" },
+  { id: "opp_4", propertyId: "prop_4", stage: "discover", interestedAgentIds: ["agent_1"], updatedAt: "2026-08-28" },
+  { id: "opp_5", propertyId: "prop_5", stage: "legal_close", interestedAgentIds: ["agent_1"], updatedAt: "2026-09-10" },
 ];
 
 export function getPropertyById(id: string) {
   return properties.find((p) => p.id === id);
+}
+
+export function getTransactionById(id: string) {
+  return transactions.find((t) => t.id === id);
+}
+
+export function getTransactionsForProperty(propertyId: string) {
+  return transactions.filter((t) => t.propertyId === propertyId);
+}
+
+export function getTransactionsForAgent(agentId: string) {
+  return transactions.filter(
+    (t) => t.leadAgentId === agentId || t.collaboratingAgentId === agentId || t.originatingAgentId === agentId
+  );
 }
 
 export function getOpportunitiesForProperty(propertyId: string) {
@@ -270,4 +543,3 @@ export function getAgentBySlug(slug: string) {
 export function getAgentById(id: string) {
   return agents.find((a) => a.id === id);
 }
-

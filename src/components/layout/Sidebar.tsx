@@ -11,10 +11,13 @@ const NAV_BY_ROLE = {
   manager: [
     { href: "/manager", label: "Dashboard" },
     { href: "/manager/properties", label: "My properties" },
+    { href: "/agent/transactions", label: "Deal progress" },
   ],
   agent: [
-    { href: "/agent", label: "Opportunities" },
+    { href: "/agent", label: "Opportunity feed" },
+    { href: "/agent/transactions", label: "Active deals" },
     { href: "/agent/inspections", label: "My inspections" },
+    { href: "/catalogue/chiamaka-nwosu", label: "My public catalogue" },
   ],
   admin: [
     { href: "/admin", label: "Overview" },
