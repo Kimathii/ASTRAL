@@ -6,23 +6,25 @@ import { useRole } from "@/lib/role-context";
 
 // Nav items are permission-aware: each role sees a different set, but it's
 // the same Sidebar component rendering all three — not three sidebars.
-
 const NAV_BY_ROLE = {
   manager: [
     { href: "/manager", label: "Dashboard" },
     { href: "/manager/properties", label: "My properties" },
     { href: "/agent/transactions", label: "Deal progress" },
+    { href: "/documents", label: "Documents" },
   ],
   agent: [
     { href: "/agent", label: "Opportunity feed" },
     { href: "/agent/transactions", label: "Active deals" },
     { href: "/agent/inspections", label: "My inspections" },
     { href: "/catalogue/chiamaka-nwosu", label: "My public catalogue" },
+    { href: "/documents", label: "Documents" },
   ],
   admin: [
     { href: "/admin", label: "Overview" },
     { href: "/admin/approvals", label: "Approval queue" },
     { href: "/admin/network", label: "Network activity" },
+    { href: "/documents", label: "Documents" },
   ],
 };
 
@@ -42,10 +44,16 @@ export function Sidebar() {
 
       <nav className="flex flex-1 flex-col gap-0.5 px-3 py-2">
         {items.map((item) => {
-          const active = pathname === item.href;
+          // Only Documents uses prefix matching, so /documents/new keeps it
+          // highlighted. Every other item keeps its exact match, because /agent
+          // is a prefix of several other agent routes.
+          const active =
+            item.href === "/documents"
+              ? pathname === item.href || pathname.startsWith(item.href + "/")
+              : pathname === item.href;
           return (
             <Link
-              key={item.href}
+              key={`${item.href}-${item.label}`}
               href={item.href}
               className={[
                 "rounded-lg px-3 py-2 text-sm font-medium transition",
